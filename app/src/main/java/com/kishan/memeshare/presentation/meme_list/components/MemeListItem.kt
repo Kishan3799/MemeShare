@@ -7,6 +7,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -23,9 +24,9 @@ fun MemeListItem(
 ) {
     Card(
         modifier = Modifier
-            .padding(horizontal = 3.dp, vertical = 3.dp)
+            .padding(horizontal = 5.dp, vertical = 5.dp)
             .fillMaxWidth(),
-        backgroundColor = Color(0xFF90DAFF),
+        backgroundColor = Color(0xD5F1FAFF),
         shape = RoundedCornerShape(12.dp)
     ) {
         Column(
@@ -49,7 +50,8 @@ fun MemeListItem(
                 contentDescription = null,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(10.dp),
+                    .padding(10.dp)
+                    .clip(shape = RoundedCornerShape(3.dp)),
                 contentScale = ContentScale.Crop
             )
         }

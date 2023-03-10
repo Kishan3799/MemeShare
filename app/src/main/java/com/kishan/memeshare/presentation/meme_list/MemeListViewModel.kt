@@ -7,8 +7,10 @@ import androidx.lifecycle.viewModelScope
 import com.kishan.memeshare.common.Resources
 import com.kishan.memeshare.domain.use_case.GetMemesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,8 +22,17 @@ class MemeListViewModel @Inject constructor(
 
     init {
         getMemes()
+        refreshingMeme()
     }
 
+    fun refreshingMeme() = viewModelScope.launch{
+        _state.value = MemeListState(refreshing = true)
+        delay(1500)
+        getMemes()
+        _state.value = MemeListState(refreshing = false)
+    }
+
+//    get meme on the internet
     private fun getMemes(){
         getMemesUseCase().onEach { results->
             when (results){
