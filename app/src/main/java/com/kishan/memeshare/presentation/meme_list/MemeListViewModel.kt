@@ -1,5 +1,6 @@
 package com.kishan.memeshare.presentation.meme_list
 
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
@@ -27,7 +28,7 @@ class MemeListViewModel @Inject constructor(
 
     fun refreshingMeme() = viewModelScope.launch{
         _state.value = MemeListState(refreshing = true)
-        delay(1500)
+        delay(2000)
         getMemes()
         _state.value = MemeListState(refreshing = false)
     }

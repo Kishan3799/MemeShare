@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
@@ -56,4 +57,10 @@ fun MemeListItem(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun PreviewMemeItem() {
+    MemeListItem(meme = Meme("leaves call", "https://i.redd.it/j6wu6o9ncfv51.gif"))
 }

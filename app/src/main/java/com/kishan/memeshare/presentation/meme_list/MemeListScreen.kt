@@ -13,21 +13,30 @@ import androidx.compose.material.Text
 import androidx.compose.material.pullrefresh.PullRefreshIndicator
 import androidx.compose.material.pullrefresh.pullRefresh
 import androidx.compose.material.pullrefresh.rememberPullRefreshState
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.kishan.memeshare.presentation.meme_list.components.MemeListItem
+import com.kishan.memeshare.presentation.meme_list.components.ShimmerListItem
+import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable
 fun MemeListScreen(
     viewModel: MemeListViewModel = hiltViewModel(),
 ) {
+    var shimmerIsLoading by remember {
+        mutableStateOf(true)
+    }
     val state = viewModel.state.value
     val stateRefreshState = rememberPullRefreshState(state.refreshing, onRefresh = {viewModel.refreshingMeme()})
+    LaunchedEffect(key1 = shimmerIsLoading) {
+        delay(3000)
+        shimmerIsLoading = false
+    }
     Box(modifier = Modifier
         .fillMaxSize()
         .padding(5.dp)
@@ -35,7 +44,10 @@ fun MemeListScreen(
         LazyColumn(modifier = Modifier.fillMaxSize()){
             if(!state.refreshing) {
                 items(state.memes) { memes ->
-                    MemeListItem(meme = memes)
+//                    MemeListItem(meme = memes)
+                    ShimmerListItem(isLoading = shimmerIsLoading, contentAfterLoading = { MemeListItem(meme = memes) }, modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp))
                 }
             }
         }
